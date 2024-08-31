@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherSpy</title>
+    <link rel="stylesheet" href="css/WeatherSpyStyles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+    <header>
+        <h1>WeatherSpy</h1>
+        <input type="text" id="locationInput" placeholder="Enter ZIP code or City, Country Code">
+        <button id="searchButton">Get Weather</button>
+        <br>
+        <button id="currentLocationButton">Get Weather by Current Location</button>
+    </header>
+    <main id="main-container">
+        <!-- Full-width section for the map -->
+        <section id="map-container">
+            <h2>Weather Map</h2>
+            <p>Explore global weather patterns with the interactive map. Use the controls to toggle between different weather layers such as clouds, precipitation, and temperature.</p>
+            <div id="map" style="height: 500px;"></div>
+        </section>
+    
+        <!-- Row with two sections side by side -->
+        <div id="row-container">
+            <section id="weatherInfo">
+                <h2>Current Weather</h2>
+                <p>Enter a city name or ZIP code above to view the current weather conditions.</p>
+            </section>
+            <section id="alertsInfo">
+                <h2>Weather Alerts</h2>
+                <p>Weather alerts will be displayed here if any are available for the selected location.</p>
+            </section>
+        </div>
+    
+        <!-- Full-width section for the forecast -->
+        <section id="forecastInfo">
+            <h2>5-Day Forecast</h2>
+            <!-- Forecast content here -->
+        </section>
+    
+        <!-- Full-width section for resources -->
+        <section id="resources">
+            <h2>Essential Resources</h2>
+            <ul>
+                <li><a href="https://www.nhc.noaa.gov/" target="_blank">National Hurricane Center (NHC)</a></li>
+                <li><a href="https://www.ready.gov/hurricanes" target="_blank">Ready.gov Hurricane Preparedness</a></li>
+                <li><a href="https://www.weather.gov/" target="_blank">National Weather Service (NWS)</a></li>
+                <li><a href="https://www.fema.gov/" target="_blank">Federal Emergency Management Agency (FEMA)</a></li>
+                <li><a href="https://www.cdc.gov/disasters/hurricanes/index.html" target="_blank">CDC Hurricane Resources</a></li>
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <section id="creator">
+            <p>Website created by <a href="https://www.SiteSpyder.com" target="_blank">SiteSpyder.com</a>.</p>
+        </section>
+    </footer>
+    
+    <script src="js/FetchWeather.js"></script>
+</body>
+</html>
