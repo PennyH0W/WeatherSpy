@@ -1,0 +1,308 @@
+header {
+    background: #333;
+    color: #fff;
+    padding: 10px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: url('../images/starry-bg-1.webp') repeat; /* place url here for a bg img */
+    background-size: cover;
+    color: #333;
+    text-align: center;
+}
+
+main {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* Main container styles */
+#main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Row container for current weather and alerts */
+#row-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Space between the two sections */
+    margin-top: 20px;
+}
+
+/* Container Style */
+.container {
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+/* Container with Gradient */
+.container-gradient {
+    /* background: linear-gradient(135deg, #f0f0f0, #ffffff); */
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Example for a subtle watermark */
+body::after {
+    content: '';
+    background: url('path/to/watermark.png') no-repeat center center;
+    opacity: 0.05;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* Section Styles */
+section {
+    background-color: rgba(30, 30, 60, 0.8); /* A dark bluish color with transparency */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: #ffffff; /* White font color for good contrast */
+    margin-bottom: 20px;
+}
+
+/* Font Colors */
+h2, p {
+    color: #e0e0ff; /* Light bluish color for headers and text */
+}
+
+a {
+    color: #b0c4de; /* Light steel blue for links */
+}
+
+a:hover {
+    color: #add8e6; /* Lighter blue on hover */
+}
+
+
+/* Input Style */
+#locationInput {
+    padding: 10px;
+    width: 40%;
+    margin: 10px 0;
+}
+
+/* Button Styles */
+#searchButton {
+    padding: 10px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+#searchButton:hover {
+    background: #0056b3;
+}
+
+/* Container for weather and alerts sections */
+.weather-alerts-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+#weatherInfo, #alertsInfo, #forecastInfo, #map-container, #resources {
+    padding: 20px;
+    margin: 10px;
+    /* background: #fff; */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* background: linear-gradient(to bottom right, #e0f7ff, #b3d9ff); /* Adjust the colors to a softer blue gradient */
+    padding: 20px;
+}
+
+/* Make the sections equal width */
+#weatherInfo,
+#alertsInfo {
+    flex: 1;
+}
+
+/* Center the titles */
+#weatherInfo h2,
+#alertsInfo h2 {
+    text-align: center;
+}
+
+/* Center the content within each section */
+#weatherInfo p,
+#alertsInfo p {
+    text-align: center;
+}
+
+/* 5-Day Forecast Styles */
+/* Center the title */
+#forecastInfo h2 {
+    text-align: center;
+    width: 100%;
+}
+
+/* 5-Day Forecast Styles */
+.forecast-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px;
+    flex-wrap: wrap;
+}
+
+.forecast-day {
+    text-align: center;
+    /* background-color: #f8f9fa; */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 120px;
+}
+
+.forecast-day h3 {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.forecast-day p {
+    text-align: center;
+}
+
+.forecast-day img {
+    max-width: 50px;
+    margin-top: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Map Styles */
+#mapSection {
+    margin-top: 20px;
+    padding: 15px;
+    /* background-color: #f9f9f9; */
+    border-radius: 5px;
+    border: 2px solid #ccc;
+}
+
+#mapSection h2 {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+}
+
+#map-container {
+    width: 100%t; /* Ensures the container fits the map content exactly */
+    margin: 0 auto; /* Centers the map container */
+}
+
+#map {
+    /* background-color: white; */
+    background-repeat: no-repeat;
+    width: 100%; /* Ensure the map takes up the full width of the container */
+    height: 500px; /* Maintain the specified height */
+}
+
+.leaflet-control-attribution {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+/*
+.map-credit {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 12px;
+}
+*/
+
+/* Resources Styles */
+#resources {
+    margin-top: 20px;
+    padding: 15px;
+    /* background-color: #f9f9f9; */
+    border-radius: 5px;
+    text-align: center;
+}
+
+#resources h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+#resources ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#resources ul li {
+    margin-bottom: 5px;
+}
+
+#resources ul li a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+#resources ul li a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #000000; /* Black background */
+    color: #ffffff; /* White text color */
+    padding: 20px;
+    text-align: center;
+}
+
+footer a {
+    color: #00ff00; /* Contrasting color for links */
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #ff00ff; /* Hover color for links */
+    text-decoration: underline;
+}
+
+footer p {
+    margin: 0;
+    padding: 5px;
+    font-size: 14px;
+}
+
+footer .creator {
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+footer .creator a {
+    font-weight: bold; /* Make the link bold to stand out */
+}
+
+footer .creator a:hover {
+    color: #ffc107; /* Change color on hover to match any accent color used in the header */
+}
