@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WeatherSpy</title>
+    <title>WeatherSpyder</title>
     <link rel="stylesheet" href="css/WeatherSpyStyles.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 <body>
     <header>
-        <h1>WeatherSpy</h1>
-        <input type="text" id="locationInput" placeholder="Enter ZIP code or City, Country Code">
-        <button id="searchButton">Get Weather</button>
-        <br>
-        <button id="currentLocationButton">Get Weather by Current Location</button>
+        <div class="brand">
+            <img src="icons/site-spyder-logo-3.webp" class="logo">
+            <h1>WeatherSpyder</h1>
+        </div>
+        <div class="search">
+            <input type="text" id="locationInput" placeholder="Enter ZIP code or City, Country Code">
+            <button id="searchButton">Get Weather</button>
+            <button id="currentLocationButton">Use Current Location</button>
+        </div>
     </header>
+    
     <main id="main-container">
         <!-- Full-width section for the map -->
         <section id="map-container">
@@ -55,9 +60,9 @@
         </section>
     </main>
     <footer>
-        <section id="creator">
-            <p>Website created by <a href="https://www.SiteSpyder.com" target="_blank">SiteSpyder.com</a>.</p>
-        </section>
+        <div id="creator">
+            <p>&copy; 2024 WeatherSpyder by <a href="https://sitespyder.com/">SiteSpyder</a>. All rights reserved.</p>
+        </div>
     </footer>
     
     <script src="js/FetchWeather.js"></script>

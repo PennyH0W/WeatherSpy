@@ -1,7 +1,7 @@
-header {
-    background: #333;
-    color: #fff;
-    padding: 10px;
+/* General Styles */
+/* Set minimum width for the entire page */
+html, body {
+    min-width: 320px; /* Ensures the whole page doesn't shrink below 320px */
 }
 
 body {
@@ -9,13 +9,97 @@ body {
     margin: 0;
     background: url('../images/starry-bg-1.webp') repeat; /* place url here for a bg img */
     background-size: cover;
-    color: #333;
+    color: #e0e0ff;
     text-align: center;
 }
 
 main {
     padding-left: 20px;
     padding-right: 20px;
+}
+
+/* Header Stykes */
+header {
+    background-color: rgba(0, 0, 0, 0.8); /* Black with 80% opacity */
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap as the screen size shrinks */
+    align-items: center; /* Centers items vertically */
+    justify-content: center; /* Centers the brand and search group horizontally */
+    text-align: center;
+    gap: 40px; /* Adds space between the brand and search divs */
+}
+
+.logo {
+    height: 50px;
+    width: auto;
+    border: 2px solid #e0e0ff;
+    border-radius: 5px;
+    margin-right: 15px;
+    align-items: center; /* Centers items vertically within the brand group */
+    background-color: transparent;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Button Styles */
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #666;
+}
+
+/* Input Style */
+#locationInput, #searchButton, #currentLocationButton {
+    height: 40px;
+    width: 250px;
+    text-align: center;
+    align-items: center; /* Centers items vertically */
+    gap: 30px;
+    flex: 1; /* Allows the input and buttons to grow/shrink */
+    box-sizing: border-box; /* Ensures padding doesn't affect the height */
+}
+
+#locationInput {
+    padding: 0 10px; /* Adjust padding to fit the height */
+    flex: 2 1 auto; /* Allows the input box to grow/shrink */
+}
+
+/* Button Styles */
+/* Button Styles */
+#searchButton, 
+#currentLocationButton {
+    background: #444; /* Gray background */
+    color: white; /* White text */
+    border: 2px solid #e0e0ff; /* Teal border */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease; /* Smooth transition for hover effects */
+    white-space: nowrap;
+}
+
+#searchButton:hover, 
+#currentLocationButton:hover {
+    background: #666; /* Slightly lighter gray on hover */
+    border-color: #008080; /* Darker teal border on hover */
 }
 
 /* Main container styles */
@@ -31,6 +115,7 @@ main {
     justify-content: space-between;
     gap: 20px; /* Space between the two sections */
     margin-top: 20px;
+    flex-wrap: wrap; /* Allows items to wrap as the screen size shrinks */
 }
 
 /* Container Style */
@@ -44,7 +129,6 @@ main {
 
 /* Container with Gradient */
 .container-gradient {
-    /* background: linear-gradient(135deg, #f0f0f0, #ffffff); */
     padding: 20px;
     border-radius: 8px;
 }
@@ -68,41 +152,24 @@ section {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    color: #ffffff; /* White font color for good contrast */
     margin-bottom: 20px;
 }
 
-/* Font Colors */
-h2, p {
+/* Font Styles */
+h1 {
+    margin: 0;
+}
+
+h1, h2, p {
     color: #e0e0ff; /* Light bluish color for headers and text */
 }
 
 a {
-    color: #b0c4de; /* Light steel blue for links */
+    color: #b0c4de; /* A lighter steel blue on hover */
 }
 
 a:hover {
-    color: #add8e6; /* Lighter blue on hover */
-}
-
-
-/* Input Style */
-#locationInput {
-    padding: 10px;
-    width: 40%;
-    margin: 10px 0;
-}
-
-/* Button Styles */
-#searchButton {
-    padding: 10px;
-    background: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-#searchButton:hover {
-    background: #0056b3;
+    color: #b0c4de; /* A lighter steel blue on hover */
 }
 
 /* Container for weather and alerts sections */
@@ -116,11 +183,9 @@ a:hover {
 #weatherInfo, #alertsInfo, #forecastInfo, #map-container, #resources {
     padding: 20px;
     margin: 10px;
-    /* background: #fff; */
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* background: linear-gradient(to bottom right, #e0f7ff, #b3d9ff); /* Adjust the colors to a softer blue gradient */
     padding: 20px;
 }
 
@@ -160,7 +225,6 @@ a:hover {
 
 .forecast-day {
     text-align: center;
-    /* background-color: #f8f9fa; */
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 10px;
@@ -189,14 +253,12 @@ a:hover {
 #mapSection {
     margin-top: 20px;
     padding: 15px;
-    /* background-color: #f9f9f9; */
     border-radius: 5px;
     border: 2px solid #ccc;
 }
 
 #mapSection h2 {
     margin-bottom: 10px;
-    color: #333;
     font-size: 24px;
     text-align: center;
 }
@@ -207,7 +269,6 @@ a:hover {
 }
 
 #map {
-    /* background-color: white; */
     background-repeat: no-repeat;
     width: 100%; /* Ensure the map takes up the full width of the container */
     height: 500px; /* Maintain the specified height */
@@ -224,32 +285,14 @@ a:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
-/*
-.map-credit {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 5px;
-    border-radius: 3px;
-    font-size: 12px;
-}
-*/
-
 /* Resources Styles */
 #resources {
     margin-top: 20px;
     padding: 15px;
-    /* background-color: #f9f9f9; */
     border-radius: 5px;
     text-align: center;
 }
 
-#resources h2 {
-    margin-bottom: 10px;
-    color: #333;
-}
 
 #resources ul {
     list-style-type: none;
@@ -262,30 +305,28 @@ a:hover {
 
 #resources ul li a {
     text-decoration: none;
-    color: #007bff;
 }
 
 #resources ul li a:hover {
     text-decoration: underline;
-    color: #0056b3;
+    color: #b0c4de; /* A lighter steel blue on hover */
 }
 
 /* Footer Styles */
 footer {
-    background-color: #000000; /* Black background */
-    color: #ffffff; /* White text color */
-    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8); /* Black with 80% opacity */
+    color: #e0e0ff;
+    padding: 30px;
     text-align: center;
 }
 
 footer a {
-    color: #00ff00; /* Contrasting color for links */
     text-decoration: none;
 }
 
 footer a:hover {
-    color: #ff00ff; /* Hover color for links */
     text-decoration: underline;
+    color: #b0c4de; /* A lighter steel blue on hover */
 }
 
 footer p {
@@ -294,15 +335,46 @@ footer p {
     font-size: 14px;
 }
 
-footer .creator {
-    margin-top: 10px;
-    font-size: 16px;
+.creator {
+    background-color: transparent;
 }
 
-footer .creator a {
-    font-weight: bold; /* Make the link bold to stand out */
+/* Ensure wrapping at smaller screen sizes */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px; /* Reduced gap between brand and search when wrapped */
+    }
+    
+    .brand, 
+    .search {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .search {
+        flex-direction: column;
+        margin-bottom: 10px;
+        gap: 10px;
+    }
+
+    .logo {
+        height: 40px; /* Reduce the height for medium screens */
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
 }
 
-footer .creator a:hover {
-    color: #ffc107; /* Change color on hover to match any accent color used in the header */
+@media (max-width: 480px) {
+    .logo {
+        height: 30px; /* Further reduce the height for small screens */
+    }
 }
+
