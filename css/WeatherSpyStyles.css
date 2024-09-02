@@ -61,6 +61,7 @@ button {
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    white-space: nowrap;
 }
 
 button:hover {
@@ -68,7 +69,7 @@ button:hover {
 }
 
 /* Input Style */
-#locationInput, #searchButton, #currentLocationButton {
+#locationInputNws, #searchButtonNws, #currentLocationButtonNws {
     height: 40px;
     width: 250px;
     text-align: center;
@@ -78,14 +79,14 @@ button:hover {
     box-sizing: border-box; /* Ensures padding doesn't affect the height */
 }
 
-#locationInput {
+#locationInputNws {
     padding: 0 10px; /* Adjust padding to fit the height */
     flex: 2 1 auto; /* Allows the input box to grow/shrink */
 }
 
 /* Button Styles */
 /* Button Styles */
-#searchButton, 
+#searchButtonNws, 
 #currentLocationButton {
     background: #444; /* Gray background */
     color: white; /* White text */
@@ -96,18 +97,32 @@ button:hover {
     white-space: nowrap;
 }
 
-#searchButton:hover, 
+#searchButtonNws:hover, 
 #currentLocationButton:hover {
     background: #666; /* Slightly lighter gray on hover */
     border-color: #008080; /* Darker teal border on hover */
 }
 
-/* Main container styles */
-#main-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+
+
+/* Styles for the calm weather image */
+.calm-weather-image {
+    width: 250px;
+    height: auto;
+    display: block; /* Ensures the image takes up its own line */
+    border: 2px solid #e0e0ff;
+    border-radius: 8px;
+    text-align: center;
+    margin: auto;
 }
+
+/* Styles for the calm weather message */
+.calm-weather-message {
+    color: #e0e0ff; /* Matching your theme's color */
+    text-align: center;
+    margin-top: 10px;
+}
+
 
 /* Row container for current weather and alerts */
 #row-container {
@@ -116,6 +131,23 @@ button:hover {
     gap: 20px; /* Space between the two sections */
     margin-top: 20px;
     flex-wrap: wrap; /* Allows items to wrap as the screen size shrinks */
+}
+
+/* Custom Horizontal Rule */
+hr.custom-hr {
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, transparent, #e0e0ff, transparent);
+    margin: 20px 0;
+    opacity: 0.7;
+}
+
+
+/* Main container styles */
+#main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 /* Container Style */
@@ -180,7 +212,7 @@ a:hover {
     margin-bottom: 20px;
 }
 
-#weatherInfo, #alertsInfo, #forecastInfo, #map-container, #resources {
+#weatherInfoNws, #alertsInfoNws, #forecastInfoNws, #map-container, #resources {
     padding: 20px;
     margin: 10px;
     border: 1px solid #ddd;
@@ -190,26 +222,26 @@ a:hover {
 }
 
 /* Make the sections equal width */
-#weatherInfo,
-#alertsInfo {
+#weatherInfoNws,
+#alertsInfoNws {
     flex: 1;
 }
 
 /* Center the titles */
-#weatherInfo h2,
-#alertsInfo h2 {
+#weatherInfoNws h2,
+#alertsInfoNws h2 {
     text-align: center;
 }
 
 /* Center the content within each section */
-#weatherInfo p,
-#alertsInfo p {
+#weatherInfoNws p,
+#alertsInfoNws p {
     text-align: center;
 }
 
 /* 5-Day Forecast Styles */
 /* Center the title */
-#forecastInfo h2 {
+#forecastInfoNws h2 {
     text-align: center;
     width: 100%;
 }

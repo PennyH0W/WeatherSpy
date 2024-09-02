@@ -15,9 +15,9 @@
             <h1>WeatherSpyder</h1>
         </div>
         <div class="search">
-            <input type="text" id="locationInput" placeholder="Enter ZIP code or City, Country Code">
-            <button id="searchButton">Get Weather</button>
-            <button id="currentLocationButton">Use Current Location</button>
+            <input type="text" id="locationInputNws" placeholder="Enter ZIP code or City, Country Code">
+            <button id="searchButtonNws">Get Weather</button>
+            <button id="currentLocationButtonNws">Use Current Location</button>
         </div>
     </header>
     
@@ -25,26 +25,34 @@
         <!-- Full-width section for the map -->
         <section id="map-container">
             <h2>Weather Map</h2>
+            <hr class="custom-hr">
             <p>Explore global weather patterns with the interactive map. Use the controls to toggle between different weather layers such as clouds, precipitation, and temperature.</p>
             <div id="map" style="height: 500px;"></div>
+            <!-- JS fills in this content upon click -->
         </section>
     
         <!-- Row with two sections side by side -->
         <div id="row-container">
-            <section id="weatherInfo">
+            <section id="weatherInfoNws">
                 <h2>Current Weather</h2>
+                <hr class="custom-hr">
                 <p>Enter a city name or ZIP code above to view the current weather conditions.</p>
+                <!-- JS fills in this content upon click -->
             </section>
-            <section id="alertsInfo">
+            <section id="alertsInfoNws">
                 <h2>Weather Alerts</h2>
+                <hr class="custom-hr">
                 <p>Weather alerts will be displayed here if any are available for the selected location.</p>
+                <!-- JS fills in this content upon click -->
             </section>
         </div>
     
         <!-- Full-width section for the forecast -->
-        <section id="forecastInfo">
-            <h2>5-Day Forecast</h2>
-            <!-- Forecast content here -->
+        <section id="forecastInfoNws">
+            <h2>14-Day Forecast</h2>
+            <hr class="custom-hr">
+            <p>Enter a city name or ZIP code above to view the 14-day forecast.</p>
+            <!-- JS fills in this content upon click -->
         </section>
     
         <!-- Full-width section for resources -->

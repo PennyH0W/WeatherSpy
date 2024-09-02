@@ -5,49 +5,6 @@ const weatherApiKey = '222ad89775048088f77904f7776645a4'; // Replace with your a
 const weatherUrl = 'https://api.openweathermap.org/data/2.5/weather'; // openweathermap weather
 const citySearchUrl = 'https://api.openweathermap.org/data/2.5/find'; // openweathermap cities
 
-// Event listener for search button using NWS functions
-document.getElementById('searchButtonNws').addEventListener('click', async () => {
-    const locationInputNws = document.getElementById('locationInputNws').value.trim();
-    
-    if (!locationInputNws) {
-        console.log('No input provided.');
-        document.getElementById('weatherInfoNws').innerHTML = `<p>Please enter a valid location.</p>`;
-        return;
-    }
-
-    const coordinates = await getCoordinates(locationInputNws);
-
-    if (coordinates) {
-        console.log('Coordinates for entered location:', coordinates);
-        getCurrentWeatherNws(coordinates.lat, coordinates.lon);
-        getWeatherForecastNws(coordinates.lat, coordinates.lon);
-        getWeatherAlerts(coordinates.lat, coordinates.lon);
-        map.setView([coordinates.lat, coordinates.lon], 10); // Ensure map updates with correct view
-    } else {
-        console.log('Location not found or invalid input');
-        document.getElementById('weatherInfoNws').innerHTML = `<p>Location not found. Please check the input and try again.</p>`;
-    }
-});
-
-
-// Event listener for current location button using NWS functions
-document.getElementById('currentLocationButtonNws').addEventListener('click', async () => {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(async (position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            getCurrentWeatherNws(lat, lon);
-            getWeatherForecastNws(lat, lon);
-            map.setView([lat, lon], 10); // Ensure lat, lon are valid and zoom level is correct
-
-        });
-    } else {
-        document.getElementById('weatherInfoNws').innerHTML = `<p>Geolocation is not supported by this browser.</p>`;
-    }
-});
-
-
-
 // Initialize the map with a default view (World view)
 const map = L.map('map').setView([20, 0], 2); // Center on the world with a zoom level of 2
 
@@ -99,6 +56,41 @@ L.control.layers(baseMaps).addTo(map);
 cloudsLayer.addTo(map); // Set default layer
 
 
+// Check buttons
+document.getElementById('searchButton').addEventListener('click', () => {
+    console.log('Search button clicked!');
+});
+
+document.getElementById('currentLocationButton').addEventListener('click', () => {
+    console.log('Current location button clicked!');
+});
+
+// Event listener for the search button
+document.getElementById('searchButton').addEventListener('click', async () => {
+    const locationInput = document.getElementById('locationInput').value.trim();
+    let coordinates;
+
+    if (isZipCode(locationInput)) {
+        coordinates = await getCoordinatesByZip(locationInput);
+    } else {
+        coordinates = await getCoordinates(locationInput);
+    }
+
+    if (coordinates) {
+        const locationName = await getLocationName(coordinates.lat, coordinates.lon);
+        getWeather(locationName || locationInput);
+        getForecast(coordinates.lat, coordinates.lon);
+        getWeatherAlerts(coordinates.lat, coordinates.lon);
+
+        // Update the map view to center on the searched location
+        map.setView([coordinates.lat, coordinates.lon], 10); // Adjust the zoom level as needed
+    } else {
+        document.getElementById('weatherInfo').innerHTML = `<p>Location not found.</p>`;
+    }
+});
+
+// Event listener for current location button
+document.getElementById('currentLocationButton').addEventListener('click', getWeatherByGeolocation);
 
 // Get Weather by Geolocation or Cooridnates
 function getWeatherByGeolocation() {
@@ -118,11 +110,11 @@ function getWeatherByGeolocation() {
             map.setView([lat, lon], 10); // Adjust the zoom level as needed
         }, function(error) {
             console.error("Error getting the location: ", error);
-            document.getElementById('weatherInfoNws').innerHTML = `<p>Error getting the location. Please allow location access.</p>`;
+            document.getElementById('weatherInfo').innerHTML = `<p>Error getting the location. Please allow location access.</p>`;
         });
     } else {
         console.error("Geolocation is not supported by this browser.");
-        document.getElementById('weatherInfoNews').innerHTML = `<p>Geolocation is not supported by this browser.</p>`;
+        document.getElementById('weatherInfo').innerHTML = `<p>Geolocation is not supported by this browser.</p>`;
     }
 }
 
@@ -137,7 +129,7 @@ async function getWeatherByCoordinates(lat, lon) {
         map.setView([lat, lon], 10); // Adjust the zoom level as needed
     } catch (error) {
         console.error('Error fetching the weather data:', error);
-        document.getElementById('weatherInfoNws').innerHTML = `<p>Error fetching weather data. Please try again.</p>`;
+        document.getElementById('weatherInfo').innerHTML = `<p>Error fetching weather data. Please try again.</p>`;
     }
 }
 
@@ -148,7 +140,23 @@ function isZipCode(input) {
     return /^\d{5}$/.test(input);
 }
 
+// Geocoding functions
+async function getCoordinates(city) {
+    const geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=${weatherApiKey}`;
+    const response = await fetch(geoUrl);
+    const data = await response.json();
+    if (data.length > 0) {
+        return { lat: data[0].lat, lon: data[0].lon };
+    }
+    return null;
+}
 
+async function getCoordinatesByZip(zipCode, countryCode = 'US') {
+    const geoUrl = `http://api.openweathermap.org/geo/1.0/zip?zip=${zipCode},${countryCode}&appid=${weatherApiKey}`;
+    const response = await fetch(geoUrl);
+    const data = await response.json();
+    return { lat: data.lat, lon: data.lon };
+}
 
 async function getLocationName(lat, lon) {
     const geoUrl = `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${weatherApiKey}`;
@@ -183,12 +191,12 @@ async function getWeather(location) {
         displayWeather(data);
     } catch (error) {
         console.error('Error fetching the weather data:', error);
-        document.getElementById('weatherInfoNws').innerHTML = `<p>Error fetching weather data. Please try again.</p>`;
+        document.getElementById('weatherInfo').innerHTML = `<p>Error fetching weather data. Please try again.</p>`;
     }
 }
 
 function displayWeather(data) {
-    const weatherInfoNws = document.getElementById('weatherInfoNws');
+    const weatherInfo = document.getElementById('weatherInfo');
     let weatherContent = `
         <h2>Weather Info</h2>
         <h3>Weather in ${data.name}</h3>
@@ -201,13 +209,13 @@ function displayWeather(data) {
         <p>Sunrise: ${new Date(data.sys.sunrise * 1000).toLocaleTimeString()}</p>
         <p>Sunset: ${new Date(data.sys.sunset * 1000).toLocaleTimeString()}</p>
     `;
-    weatherInfoNws.innerHTML = weatherContent;
+    weatherInfo.innerHTML = weatherContent;
 }
 
 // Get Weather Alerts using NWS API
 async function getWeatherAlerts(lat, lon) {
+    // Use the NWS API with point parameter to get alerts for the specific location
     const alertsUrl = `https://api.weather.gov/alerts?point=${lat},${lon}`;
-    console.log('Alerts URL:', alertsUrl); // Log the alerts URL
 
     try {
         const alertsResponse = await fetch(alertsUrl);
@@ -221,15 +229,15 @@ async function getWeatherAlerts(lat, lon) {
         displayWeatherAlerts(alertsData);
     } catch (error) {
         console.error('Error fetching weather alerts:', error.message);
-        document.getElementById('alertsInfoNws').innerHTML = `
+        document.getElementById('alertsInfo').innerHTML = `
             <h2>Weather Alerts</h2>
             <p>Error fetching weather alerts. Please try again later.</p>`;
     }
 }
 
 function displayWeatherAlerts(data) {
-    const alertsInfoNws = document.getElementById('alertsInfoNws');
-    alertsInfoNws.innerHTML = ''; // Clear previous content
+    const alertsInfo = document.getElementById('alertsInfo');
+    alertsInfo.innerHTML = ''; // Clear previous content
     
     let alertsContent = `<h2>Weather Alerts</h2>`;
 
@@ -248,12 +256,8 @@ function displayWeatherAlerts(data) {
         `;
     }
     
-    alertsInfoNws.innerHTML = alertsContent;
+    alertsInfo.innerHTML = alertsContent;
 }
-
-
-
-
 
 // Get Forecast
 async function getForecast(lat, lon) {
@@ -290,47 +294,57 @@ function displayForecast(data) {
     forecastInfo.innerHTML = forecastContent;
 }
 
+// New 
+
+// Event listener for search button using NWS functions
+document.getElementById('searchButtonNws').addEventListener('click', async () => {
+    const locationInput = document.getElementById('locationInputNws').value.trim();
+    const coordinates = await getCoordinates(locationInput); // Function to get lat/lon from city/ZIP
+
+    if (coordinates) {
+        getCurrentWeatherNws(coordinates.lat, coordinates.lon);
+        getWeatherForecastNws(coordinates.lat, coordinates.lon);
+        // Update the map view as well if you have a map component
+    } else {
+        document.getElementById('weatherInfoNws').innerHTML = `<p>Location not found.</p>`;
+    }
+});
+
+// Event listener for current location button using NWS functions
+document.getElementById('currentLocationButtonNws').addEventListener('click', async () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            getCurrentWeatherNws(lat, lon);
+            getWeatherForecastNws(lat, lon);
+        });
+    } else {
+        document.getElementById('weatherInfoNws').innerHTML = `<p>Geolocation is not supported by this browser.</p>`;
+    }
+});
+
 async function getCurrentWeatherNws(lat, lon) {
     try {
         const pointData = await getNwsPointData(lat, lon);
-        const stationsUrl = pointData.observationStations;
+        const stationUrl = pointData.observationStations[0]; // Use the first station in the list
 
-        // Fetch the list of observation stations
-        const responseStations = await fetch(stationsUrl);
-        if (!responseStations.ok) {
-            throw new Error(`HTTP error! status: ${responseStations.status}`);
-        }
-        const stationsData = await responseStations.json();
-
-        // Loop through stations until we find one that works
-        for (let station of stationsData.features) {
-            const stationUrl = `${station.id}/observations/latest`;
-            try {
-                const response = await fetch(stationUrl);
-                if (response.ok) {
-                    const weatherData = await response.json();
-                    console.log('Current Weather Data:', weatherData);
-                    displayCurrentWeatherNws(weatherData);
-                    return; // Exit once successful
-                }
-            } catch (error) {
-                console.warn(`Station ${station.id} failed: ${error.message}`);
-            }
+        const response = await fetch(`${stationUrl}/observations/latest`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        // If no station worked, show a fallback message
-        document.getElementById('weatherInfoNws').innerHTML = `<p>No current weather data available for this location.</p>`;
+        const weatherData = await response.json();
+        console.log('Current Weather Data:', weatherData); // Log the current weather data
+        displayCurrentWeatherNws(weatherData);
     } catch (error) {
         console.error('Error fetching current weather:', error);
-        document.getElementById('weatherInfoNws').innerHTML = `<p>Error fetching current weather. Please try again later.</p>`;
     }
 }
 
-
-
 function displayCurrentWeatherNws(data) {
-    const weatherInfoNws = document.getElementById('weatherInfoNws');
-    weatherInfoNws.innerHTML = `
+    const weatherInfo = document.getElementById('weatherInfoNws');
+    weatherInfo.innerHTML = `
         <h2>Current Weather</h2>
         <p>Temperature: ${data.properties.temperature.value}°C</p>
         <p>Weather: ${data.properties.textDescription}</p>
@@ -357,36 +371,6 @@ async function getWeatherForecastNws(lat, lon) {
     }
 }
 
-async function getCoordinates(locationInputNws) {
-    const geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationInputNws)},US`;
-    try {
-        const response = await fetch(geocodeUrl);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        if (data.length > 0) {
-            const coordinates = {
-                lat: data[0].lat,
-                lon: data[0].lon
-            };
-            console.log('Coordinates for entered location:', coordinates);
-            return coordinates;
-        } else {
-            console.log('Location not found or invalid input');
-            document.getElementById('weatherInfoNws').innerHTML = `<p>Location not found or invalid input.</p>`;
-            return null;
-        }
-    } catch (error) {
-        console.error('Error fetching coordinates:', error);
-        document.getElementById('weatherInfoNws').innerHTML = `<p>Error fetching coordinates. Please try again later.</p>`;
-    }
-}
-
-
-
-
-
 function displayWeatherForecastNws(data) {
     const forecastInfo = document.getElementById('forecastInfoNws');
     let forecastContent = `<h2>7-Day Forecast</h2><div class="forecast-container">`;
@@ -403,22 +387,3 @@ function displayWeatherForecastNws(data) {
     forecastContent += `</div>`;
     forecastInfo.innerHTML = forecastContent;
 }
-
-async function getNwsPointData(lat, lon) {
-    const pointUrl = `https://api.weather.gov/points/${lat},${lon}`;
-    console.log('Point Data URL:', pointUrl); // Log the point data URL
-
-    try {
-        const response = await fetch(pointUrl);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const pointData = await response.json();
-        return pointData.properties;
-    } catch (error) {
-        console.error('Error fetching NWS point data:', error);
-        throw error;
-    }
-}
-
-
