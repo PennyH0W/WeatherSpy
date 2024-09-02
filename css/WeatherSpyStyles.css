@@ -87,7 +87,7 @@ button:hover {
 /* Button Styles */
 /* Button Styles */
 #searchButtonNws, 
-#currentLocationButton {
+#currentLocationButtonNws {
     background: #444; /* Gray background */
     color: white; /* White text */
     border: 2px solid #e0e0ff; /* Teal border */
@@ -98,7 +98,7 @@ button:hover {
 }
 
 #searchButtonNws:hover, 
-#currentLocationButton:hover {
+#currentLocationButtonNws:hover {
     background: #666; /* Slightly lighter gray on hover */
     border-color: #008080; /* Darker teal border on hover */
 }
