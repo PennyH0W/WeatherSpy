@@ -39,17 +39,22 @@
                 <p>Enter a city name or ZIP code above to view the current weather conditions.</p>
                 <!-- JS fills in this content upon click -->
             </section>
-            <section id="alertsInfoNws">
+            <section id="alertsInfoNws" class="scrollable">
                 <h2>Weather Alerts</h2>
                 <hr class="custom-hr">
-                <p>Weather alerts will be displayed here if any are available for the selected location.</p>
+                
                 <!-- JS fills in this content upon click -->
-            </section>
+                <div class="alerts-content">
+                    <p>Weather alerts will be displayed here if any are available for the selected location.</p>
+                    <!-- Weather alerts content inserted by JS will go here -->
+                </div>
+            
+            </section>            
         </div>
     
         <!-- Full-width section for the forecast -->
         <section id="forecastInfoNws">
-            <h2>14-Day Forecast</h2>
+            <h2>Extended Forecast</h2>
             <hr class="custom-hr">
             <p>Enter a city name or ZIP code above to view the 14-day forecast.</p>
             <!-- JS fills in this content upon click -->

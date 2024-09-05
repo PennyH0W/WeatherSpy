@@ -228,31 +228,28 @@ async function getWeatherAlerts(lat, lon) {
 }
 
 function displayWeatherAlerts(data) {
-    const alertsInfoNws = document.getElementById('alertsInfoNws');
-    alertsInfoNws.innerHTML = ''; // Clear previous content
-    
-    let alertsContent = `<h2>Weather Alerts</h2>`;
+    const alertsContainer = document.querySelector('#alertsInfoNws .alerts-content');
+    let alertsContent = '';
 
     if (data.features && data.features.length > 0) {
-        alertsContent += data.features.map(alert => `
+        alertsContent = data.features.map(alert => `
             <h3>${alert.properties.headline}</h3>
             <p>${alert.properties.description}</p>
             <p><em>From: ${new Date(alert.properties.sent).toLocaleString()}</em></p>
             <p><em>Effective: ${new Date(alert.properties.effective).toLocaleString()}</em></p>
         `).join('');
     } else {
-        alertsContent += `
+        // Filler content for when there are no active alerts
+        alertsContent = `
             <p>No active weather alerts for this location.</p>
             <img src="../images/calm-bg-1.webp" alt="Calm weather" class="calm-weather-image">
             <p class="calm-weather-message">It's all clear skies and calm weather in your area. Enjoy the day!</p>
         `;
     }
-    
-    alertsInfoNws.innerHTML = alertsContent;
+
+    // Update the alerts content in the DOM, replacing the default message
+    alertsContainer.innerHTML = alertsContent;
 }
-
-
-
 
 
 // Get Forecast
@@ -326,16 +323,28 @@ async function getCurrentWeatherNws(lat, lon) {
     }
 }
 
-
-
 function displayCurrentWeatherNws(data) {
     const weatherInfoNws = document.getElementById('weatherInfoNws');
+
+    // Convert Celsius to Fahrenheit
+    const temperatureC = data.properties.temperature.value;
+    const temperatureF = ((temperatureC * 9 / 5) + 32).toFixed(2);
+
+    // Ensure wind speed and pressure are valid before display
+    const windSpeed = data.properties.windSpeed.value ? `${data.properties.windSpeed.value} m/s` : 'N/A';
+    const pressure = data.properties.barometricPressure.value ? `${(data.properties.barometricPressure.value / 100).toFixed(2)} hPa` : 'N/A';
+
+    // Get the weather icon
+    const iconUrl = data.properties.icon;
+
     weatherInfoNws.innerHTML = `
         <h2>Current Weather</h2>
-        <p>Temperature: ${data.properties.temperature.value}°C</p>
+        <p>Temperature: ${temperatureF}°F / ${temperatureC}°C</p>
+        <img src="${iconUrl}" alt="Weather Icon">
         <p>Weather: ${data.properties.textDescription}</p>
-        <p>Wind Speed: ${data.properties.windSpeed.value} m/s</p>
-        <p>Pressure: ${data.properties.barometricPressure.value / 100} hPa</p>
+        <p>Wind Speed: ${windSpeed}</p>
+        <p>Pressure: ${pressure}</p>
+        <p>Humidity: ${data.properties.relativeHumidity.value}%</p>
     `;
 }
 
@@ -383,20 +392,16 @@ async function getCoordinates(locationInputNws) {
     }
 }
 
-
-
-
-
 function displayWeatherForecastNws(data) {
     const forecastInfo = document.getElementById('forecastInfoNws');
-    let forecastContent = `<h2>7-Day Forecast</h2><div class="forecast-container">`;
+    let forecastContent = `<h2>Extended Forecast</h2><div class="forecast-container">`;
 
     forecastContent += data.properties.periods.map(period => `
         <div class="forecast-day">
             <h3>${period.name}</h3>
             <p>Temperature: ${period.temperature}°${period.temperatureUnit}</p>
-            <p>Weather: ${period.shortForecast}</p>
             <img src="${period.icon}" alt="${period.shortForecast}">
+            <p>Weather: ${period.shortForecast}</p>
         </div>
     `).join('');
 

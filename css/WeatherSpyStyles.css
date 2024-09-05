@@ -2,6 +2,7 @@
 /* Set minimum width for the entire page */
 html, body {
     min-width: 320px; /* Ensures the whole page doesn't shrink below 320px */
+    overflow-x: hidden; /* Prevent horizontal scroll on the entire page */
 }
 
 body {
@@ -16,6 +17,10 @@ body {
 main {
     padding-left: 20px;
     padding-right: 20px;
+}
+
+body img {
+    border: 1px solid #ddd;
 }
 
 /* Header Stykes */
@@ -75,13 +80,15 @@ button:hover {
     text-align: center;
     align-items: center; /* Centers items vertically */
     gap: 30px;
-    flex: 1; /* Allows the input and buttons to grow/shrink */
     box-sizing: border-box; /* Ensures padding doesn't affect the height */
 }
 
 #locationInputNws {
     padding: 0 10px; /* Adjust padding to fit the height */
-    flex: 2 1 auto; /* Allows the input box to grow/shrink */
+}
+
+#searchButtonNws, #currentLocationButtonNws {
+    flex: 1; /* Allows the input and buttons to grow/shrink */
 }
 
 /* Button Styles */
@@ -103,8 +110,6 @@ button:hover {
     border-color: #008080; /* Darker teal border on hover */
 }
 
-
-
 /* Styles for the calm weather image */
 .calm-weather-image {
     width: 250px;
@@ -123,14 +128,13 @@ button:hover {
     margin-top: 10px;
 }
 
-
 /* Row container for current weather and alerts */
 #row-container {
     display: flex;
     justify-content: space-between;
     gap: 20px; /* Space between the two sections */
     margin-top: 20px;
-    flex-wrap: wrap; /* Allows items to wrap as the screen size shrinks */
+    width: 100%; /* Prevent overflow */
 }
 
 /* Custom Horizontal Rule */
@@ -141,7 +145,6 @@ hr.custom-hr {
     margin: 20px 0;
     opacity: 0.7;
 }
-
 
 /* Main container styles */
 #main-container {
@@ -222,9 +225,10 @@ a:hover {
 }
 
 /* Make the sections equal width */
-#weatherInfoNws,
-#alertsInfoNws {
-    flex: 1;
+#weatherInfoNws, #alertsInfoNws {
+    height: 330px;
+    width: 50%;
+    overflow-y: auto;  /* Show vertical scroll bar when content exceeds the height */
 }
 
 /* Center the titles */
@@ -276,9 +280,11 @@ a:hover {
 .forecast-day img {
     max-width: 50px;
     margin-top: 10px;
+    padding-bottom: 10px;
     display: block;
     margin-left: auto;
     margin-right: auto;
+    border: 1px solid #ddd;
 }
 
 /* Map Styles */
@@ -325,7 +331,6 @@ a:hover {
     text-align: center;
 }
 
-
 #resources ul {
     list-style-type: none;
     padding: 0;
@@ -371,6 +376,7 @@ footer p {
     background-color: transparent;
 }
 
+
 /* Ensure wrapping at smaller screen sizes */
 @media (max-width: 768px) {
     header {
@@ -402,11 +408,43 @@ footer p {
     h2 {
         font-size: 18px;
     }
+
+    #row-container {
+        flex-direction: column; /* Stack elements vertically on smaller screens */
+        
+    }
+
+    /* Extended Forecast Styles */
+    .forecast-container, resources {
+        padding: 0;
+        margin: 0;
+    }
+
+    /* Row container */
+    #weatherInfoNws, #alertsInfoNws {
+        height: 330px;
+        width: auto;
+        min-width: 0; /* Prevent flex items from causing overflow */
+        padding: 0;
+        margin: 0;
+    }    
+
+        /* Forecast Styles */
+        .forecast-day {
+            padding: 0px;
+        }
 }
 
 @media (max-width: 480px) {
     .logo {
         height: 30px; /* Further reduce the height for small screens */
     }
+
+    /* Forecast Styles */
+    .forecast-day {
+        padding: 0px;
+        width: 50%;
+    }
+
 }
 
