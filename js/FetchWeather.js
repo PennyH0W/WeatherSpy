@@ -242,7 +242,7 @@ function displayWeatherAlerts(data) {
         // Filler content for when there are no active alerts
         alertsContent = `
             <p>No active weather alerts for this location.</p>
-           <img src="images/calm-bg-1.webp" alt="Calm weather" class="calm-weather-image">
+            <!-- <img src="images/calm-bg-1.webp" alt="Calm weather" class="calm-weather-image"> -->
             <p class="calm-weather-message">It's all clear skies and calm weather in your area. Enjoy the day!</p>
         `;
     }
